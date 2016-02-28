@@ -1,5 +1,6 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +13,12 @@ public class Node {
     Node(String name, String[] parents, String[] probabilities){
         this.nodeName = name;
         this.parents = parents;
-        this.conditionalProbability = probabilities;
+
+        this.conditionalProbability = new ArrayList<Double>();
+        for(String prob: probabilities){
+            this.conditionalProbability.add(Double.parseDouble(prob));
+        }
+        
     }
 
     public void setType(String type){
@@ -35,7 +41,7 @@ public class Node {
     public NodeType type;
     String nodeName;
 
-    String[] conditionalProbability;
+    ArrayList<Double> conditionalProbability;
 
     String[] parents;
 
