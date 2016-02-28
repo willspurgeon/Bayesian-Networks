@@ -80,7 +80,14 @@ public class Network {
         }catch (IOException error){
 
         }
-
-
     }
+
+    public double rejectionSampling(int numSamples){
+        return 0.0;
+    }
+
+    public double likelyhoodWeightingSampling(int numSamples){
+        return 0.0;
+    }
+
 }
