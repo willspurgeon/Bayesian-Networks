@@ -19,7 +19,12 @@ public class Network {
             String nodeName = lineArray[0];
 
             Pattern pattern = Pattern.compile("\\[((.{4}\\d ?){0,2})\\] \\[((\\d.\\d{1,2}( ?)){0,})\\]");
+            System.out.println(lineArray[1]);
             Matcher m = pattern.matcher(lineArray[1]);
+
+            if(!m.matches()){
+                System.out.println("Something is very wrong.");
+            }
 
             String[] parentNames = m.group(1).split(" ");
             String[] probabilities = m.group(3).split(" ");
