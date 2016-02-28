@@ -9,11 +9,12 @@ import java.util.regex.Pattern;
  */
 public class Network {
 
-    ArrayList<Node> network;
+    ArrayList<Node> network = new ArrayList<>();
 
     public Network(ArrayList<String> networkInput, String query) {
         String[] queries = query.split(",");
 
+        int i = 0;
         for(String line: networkInput){
             String[] lineArray = line.split(": ");
             String nodeName = lineArray[0];
@@ -29,10 +30,10 @@ public class Network {
             String[] parentNames = m.group(1).split(" ");
             String[] probabilities = m.group(3).split(" ");
 
-            System.out.println("Name: " + nodeName + " Parent1: " + parentNames[0] + " Prob1: " + probabilities[1]);
+            Node node = new Node(nodeName, parentNames, probabilities, queries[i]);
+            network.add(node);
+            i++;
         }
-
-
 
     }
 }

@@ -9,12 +9,18 @@ import java.util.ArrayList;
 //Assuming option A.
 public class Node {
 
+    Node(String name, String[] parents, String[] probabilities, String type){
+        this.nodeName = name;
+        this.parents = parents;
+        this.conditionalProbability = probabilities;
+    }
+
     public NodeType type;
     String nodeName;
 
-    float conditionalProbability;
+    String[] conditionalProbability;
 
-    ArrayList<Node> parents;
+    String[] parents;
 
 
     enum NodeType{
