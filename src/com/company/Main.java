@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
+
+    static String query;
 
     public static void main(String[] args) {
 	    if(args.length != 3){
@@ -28,7 +31,16 @@ public class Main {
 
 
             int inputCount = 0;
-            bufferedReader.readLine();
+            networkBufferedReader.readLine();
+
+            ArrayList<String> networkInput = new ArrayList<>();
+            String line;
+            while((line  = networkBufferedReader.readLine()) != null){
+                networkInput.add(line);
+            }
+
+            query = queryBufferedReader.readLine();
+
         }catch (FileNotFoundException error){
 
         }catch (IOException error){
