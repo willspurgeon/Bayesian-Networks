@@ -21,33 +21,5 @@ public class Main {
         String queryFilePath = args[1];
         Integer numSamples = Integer.parseInt(args[2]);
 
-
-        try {
-
-            FileReader networkFileReader = new FileReader(networkFilePath);
-            BufferedReader networkBufferedReader = new BufferedReader(networkFileReader);
-
-            FileReader queryFileReader = new FileReader(queryFilePath);
-            BufferedReader queryBufferedReader = new BufferedReader(queryFileReader);
-
-
-            int inputCount = 0;
-
-            ArrayList<String> networkInput = new ArrayList<>();
-            String line;
-            while((line  = networkBufferedReader.readLine()) != null){
-                networkInput.add(line);
-            }
-
-            query = queryBufferedReader.readLine();
-
-            network = new Network(networkInput, query);
-
-
-        }catch (FileNotFoundException error){
-
-        }catch (IOException error){
-
-        }
     }
 }

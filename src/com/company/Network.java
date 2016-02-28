@@ -1,5 +1,9 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,8 +15,28 @@ public class Network {
 
     ArrayList<Node> network = new ArrayList<>();
 
-    public Network(ArrayList<String> networkInput, String query) {
-        String[] queries = query.split(",");
+    public Network(String networkFilePath, String queryPath) {
+        ArrayList<String> networkInput = new ArrayList<>();
+        try {
+
+            FileReader networkFileReader = new FileReader(networkFilePath);
+            BufferedReader networkBufferedReader = new BufferedReader(networkFileReader);
+
+
+            int inputCount = 0;
+
+            networkInput = new ArrayList<>();
+            String line;
+            while((line  = networkBufferedReader.readLine()) != null){
+                networkInput.add(line);
+            }
+
+        }catch (FileNotFoundException error){
+
+        }catch (IOException error){
+
+        }
+
 
         int i = 0;
         for(String line: networkInput){
@@ -30,10 +54,33 @@ public class Network {
             String[] parentNames = m.group(1).split(" ");
             String[] probabilities = m.group(3).split(" ");
 
-            Node node = new Node(nodeName, parentNames, probabilities, queries[i]);
+            Node node = new Node(nodeName, parentNames, probabilities);
             network.add(node);
             i++;
         }
+
+    }
+
+    private void assignNodeStatus(String filePath){
+        try{
+            FileReader queryFileReader = new FileReader(filePath);
+            BufferedReader queryBufferedReader = new BufferedReader(queryFileReader);
+            String query = queryBufferedReader.readLine();
+
+            String[] queries = query.split(",");
+
+            int i = 0;
+            for(Node node: network){
+                node.setType(queries[i]);
+                i++;
+            }
+
+        }catch(FileNotFoundException error){
+
+        }catch (IOException error){
+
+        }
+
 
     }
 }
