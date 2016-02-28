@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Main {
 
     static String query;
+    static Network network;
 
     public static void main(String[] args) {
 	    if(args.length != 3){
@@ -31,7 +32,6 @@ public class Main {
 
 
             int inputCount = 0;
-            networkBufferedReader.readLine();
 
             ArrayList<String> networkInput = new ArrayList<>();
             String line;
@@ -40,6 +40,9 @@ public class Main {
             }
 
             query = queryBufferedReader.readLine();
+
+            network = new Network(networkInput, query);
+
 
         }catch (FileNotFoundException error){
 
