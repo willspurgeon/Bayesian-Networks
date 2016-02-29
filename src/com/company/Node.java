@@ -2,6 +2,7 @@ package com.company;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Will on 2/28/16.
@@ -32,7 +33,7 @@ public class Node {
             case "f":
                 this.type = NodeType.EVIDENCEFALSE;
                 break;
-            case "q":
+            case "?":
                 this.type = NodeType.QUERY;
                 break;
         }
@@ -45,6 +46,49 @@ public class Node {
 
     String[] parents;
 
+    boolean priorSample(){
+        switch (this.type) {
+            case EVIDENCETRUE:
+                return true;
+            case EVIDENCEFALSE:
+                return false;
+            case UNKNOWN:
+            case QUERY:
+                //Ramdomly sample from CPT with samples from the parents.
+                if (parents.length == 0) {
+                    Random ran = new Random(System.nanoTime());
+                    double randomNum = ran.nextDouble();
+                    return randomNum > conditionalProbability.get(0);
+                }
+                if (parents.length == 1) {
+                    Random ran = new Random(System.nanoTime());
+                    double randomNum = ran.nextDouble();
+                    boolean parentValue = Main.network.getNodeWithName(parents[0]).priorSample();
+                    if (parentValue) {
+                        return randomNum > conditionalProbability.get(2);
+                    } else {
+                        return randomNum > conditionalProbability.get(0);
+                    }
+                }
+                if (parents.length == 2) {
+                    Random ran = new Random(System.nanoTime());
+                    double randomNum = ran.nextDouble();
+                    boolean parent1Value = Main.network.getNodeWithName(parents[0]).priorSample();
+                    boolean parent2Value = Main.network.getNodeWithName(parents[1]).priorSample();
+
+                    if (parent1Value && parent2Value) {
+                        return randomNum > conditionalProbability.get(6);
+                    } else if (!parent1Value && parent2Value) {
+                        return randomNum > conditionalProbability.get(2);
+                    } else if (parent1Value && !parent2Value) {
+                        return randomNum > conditionalProbability.get(4);
+                    } else if (!parent1Value && !parent2Value) {
+                        return randomNum > conditionalProbability.get(0);
+                    }
+                }
+        }
+        return false;
+    }
 
     enum NodeType{
         QUERY,

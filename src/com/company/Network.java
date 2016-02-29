@@ -91,8 +91,31 @@ public class Network {
         }
     }
 
+    private Node getQueryVariable(){
+        for(Node node: network){
+            if(node.type == Node.NodeType.QUERY){
+                return node;
+            }
+        }
+        return null;
+    }
+
     public double rejectionSampling(int numSamples){
+        for(int i = 1; i <= numSamples; i++){
+
+        }
+
+
         return 0.0;
+    }
+
+    private priorSample(){
+        Node queryVariable = getQueryVariable();
+        int i = 0;
+        for(Node node: network){
+
+            i++;
+        }
     }
 
     public double likelyhoodWeightingSampling(int numSamples){
