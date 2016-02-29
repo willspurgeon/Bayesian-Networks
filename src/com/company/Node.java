@@ -18,7 +18,7 @@ public class Node {
         for(String prob: probabilities){
             this.conditionalProbability.add(Double.parseDouble(prob));
         }
-        
+
     }
 
     public void setType(String type){

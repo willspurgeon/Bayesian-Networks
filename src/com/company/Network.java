@@ -61,6 +61,15 @@ public class Network {
 
     }
 
+    public Node getNodeWithName(String name){
+        for(Node node: network){
+            if(node.nodeName == name){
+                return node;
+            }
+        }
+        return null;
+    }
+
     private void assignNodeStatus(String filePath){
         try{
             FileReader queryFileReader = new FileReader(filePath);
