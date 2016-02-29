@@ -119,7 +119,15 @@ public class Network {
     }
 
     public double likelyhoodWeightingSampling(int numSamples){
+        for(int i = 1; i <= numSamples; i++){
+            
+        }
+
         return 0.0;
+    }
+
+    private double weightedSample(){
+
     }
 
 }
