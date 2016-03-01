@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,11 +18,17 @@ public class Network {
 
     public Network(String networkFilePath, String queryPath) {
         ArrayList<String> networkInput = new ArrayList<>();
+        String[] nodeTypes = null;
         try {
 
             FileReader networkFileReader = new FileReader(networkFilePath);
             BufferedReader networkBufferedReader = new BufferedReader(networkFileReader);
 
+            FileReader queryFileReader = new FileReader(queryPath);
+            BufferedReader queryBufferedReader = new BufferedReader(queryFileReader);
+
+            String query = queryBufferedReader.readLine();
+            nodeTypes = query.split(",");
 
             int inputCount = 0;
 
@@ -55,6 +62,7 @@ public class Network {
             String[] probabilities = m.group(3).split(" ");
 
             Node node = new Node(nodeName, parentNames, probabilities);
+            node.setType(nodeTypes[i]);
             network.add(node);
             i++;
         }
@@ -63,10 +71,11 @@ public class Network {
 
     public Node getNodeWithName(String name){
         for(Node node: network){
-            if(node.nodeName == name){
+            if(node.nodeName.equals(name)){
                 return node;
             }
         }
+        System.out.println(name + " ABORT!");
         return null;
     }
 

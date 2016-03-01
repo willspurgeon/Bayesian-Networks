@@ -21,5 +21,11 @@ public class Main {
         String queryFilePath = args[1];
         Integer numSamples = Integer.parseInt(args[2]);
 
+        network = new Network(networkFilePath, queryFilePath);
+
+        double output = network.rejectionSampling(numSamples);
+
+        System.out.println("Output: " + output);
+
     }
 }

@@ -13,7 +13,14 @@ public class Node {
 
     Node(String name, String[] parents, String[] probabilities){
         this.nodeName = name;
-        this.parents = parents;
+        for(String parent: parents){
+            if(parent.equals("")){
+                this.parents = null;
+                break;
+            }
+            this.parents = parents;
+        }
+
 
         this.conditionalProbability = new ArrayList<Double>();
         for(String prob: probabilities){
@@ -55,7 +62,7 @@ public class Node {
             case UNKNOWN:
             case QUERY:
                 //Ramdomly sample from CPT with samples from the parents.
-                if (parents.length == 0) {
+                if (parents == null) {
                     Random ran = new Random(System.nanoTime());
                     double randomNum = ran.nextDouble();
                     return randomNum > conditionalProbability.get(0);
@@ -63,6 +70,8 @@ public class Node {
                 if (parents.length == 1) {
                     Random ran = new Random(System.nanoTime());
                     double randomNum = ran.nextDouble();
+                    Main.network.getNodeWithName(parents[0]);
+                    //System.out.println(parents[0]);
                     boolean parentValue = Main.network.getNodeWithName(parents[0]).priorSample();
                     if (parentValue) {
                         return randomNum > conditionalProbability.get(2);
