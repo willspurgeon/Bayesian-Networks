@@ -11,6 +11,13 @@ import java.util.Random;
 //Assuming option A.
 public class Node {
 
+    public NodeType type;
+    String nodeName;
+
+    ArrayList<Double> conditionalProbability;
+
+    String[] parents;
+
     Node(String name, String[] parents, String[] probabilities){
         this.nodeName = name;
         for(String parent: parents){
@@ -45,13 +52,6 @@ public class Node {
                 break;
         }
     }
-
-    public NodeType type;
-    String nodeName;
-
-    ArrayList<Double> conditionalProbability;
-
-    String[] parents;
 
     double probGivenParents(){
         switch (this.type) {
@@ -89,7 +89,6 @@ public class Node {
         }
         return 0.0;
     }
-
 
     boolean priorSample(){
         switch (this.type) {

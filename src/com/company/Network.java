@@ -20,7 +20,6 @@ public class Network {
         ArrayList<String> networkInput = new ArrayList<>();
         String[] nodeTypes = null;
         try {
-
             FileReader networkFileReader = new FileReader(networkFilePath);
             BufferedReader networkBufferedReader = new BufferedReader(networkFileReader);
 
@@ -47,7 +46,6 @@ public class Network {
             System.out.println("IO EXCEPTION");
         }
 
-
         int i = 0;
         for(String line: networkInput){
             String[] lineArray = line.split(": ");
@@ -69,7 +67,6 @@ public class Network {
             network.add(node);
             i++;
         }
-
     }
 
     public Node getNodeWithName(String name){
@@ -129,7 +126,7 @@ public class Network {
                 }
             }
         }
-        System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
+        //System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
         return (double)counts.get(1) / (double)(counts.get(0) + counts.get(1)); //# of trues / total
     }
 
@@ -186,7 +183,6 @@ public class Network {
             output.add(node.priorSample());
             i++;
         }
-        //System.out.println("Size of priors: " + output.size());
         return output;
     }
 
@@ -196,15 +192,15 @@ public class Network {
         counts.add(0.0); //True count
         for(int i = 1; i <= numSamples; i++){
             WeightedSample samples = weightedSample();
-                for(Boolean bool: samples.output){
-                    if(bool){
-                        counts.set(1, counts.get(1)+samples.w);
-                    }else{
-                        counts.set(0, counts.get(0)+samples.w);
-                    }
+            for(Boolean bool: samples.output){
+                if(bool){
+                    counts.set(1, counts.get(1)+samples.w);
+                }else{
+                    counts.set(0, counts.get(0)+samples.w);
+                }
             }
         }
-        System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
+        //System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
         return counts.get(1)/(counts.get(0)+counts.get(1));
     }
 
@@ -216,9 +212,10 @@ public class Network {
             if(node.type == Node.NodeType.EVIDENCEFALSE || node.type == Node.NodeType.EVIDENCETRUE){
                 //w = w * node.
                 if(node.type == Node.NodeType.EVIDENCETRUE){
-                    System.out.println("Parents: " + node.probGivenParents());
+                    //System.out.println("Parents: " + node.probGivenParents());
                     w = w * node.probGivenParents();
                 }else{
+                    //System.out.println("Parents 2: " + node.probGivenParents());
                     w = w * (1-node.probGivenParents());
                 }
             }else{
