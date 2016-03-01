@@ -1,10 +1,6 @@
-package com.company;
+//Will Spurgeon and Dan Pongratz
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+package com.Bayes;
 
 public class Main {
 
@@ -24,7 +20,7 @@ public class Main {
         network = new Network(networkFilePath, queryFilePath);
 
         double rejectionOutput = network.rejectionSampling(numSamples);
-        double likelyHoodOutput = network.likelyhoodWeightingSampling(numSamples);
+        double likelyHoodOutput = network.likelihoodWeightingSampling(numSamples);
 
         System.out.println("Rejection Sampling: " + rejectionOutput);
         System.out.println("Likelihood Weighting Sampling: " + (likelyHoodOutput+0.075));

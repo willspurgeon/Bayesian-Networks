@@ -1,12 +1,9 @@
-package com.company;
+//Will Spurgeon and Dan Pongratz
 
-import java.lang.reflect.Array;
+package com.Bayes;
+
 import java.util.ArrayList;
 import java.util.Random;
-
-/**
- * Created by Will on 2/28/16.
- */
 
 //Assuming option A.
 public class Node {
@@ -29,7 +26,7 @@ public class Node {
         }
 
 
-        this.conditionalProbability = new ArrayList<Double>();
+        this.conditionalProbability = new ArrayList<>();
         for(String prob: probabilities){
             this.conditionalProbability.add(Double.parseDouble(prob));
         }
@@ -80,9 +77,9 @@ public class Node {
                         return conditionalProbability.get(7);
                     } else if (!parent1Value && parent2Value) {
                         return conditionalProbability.get(3);
-                    } else if (parent1Value && !parent2Value) {
+                    } else if (parent1Value) {
                         return conditionalProbability.get(5);
-                    } else if (!parent1Value && !parent2Value) {
+                    } else {
                         return conditionalProbability.get(1);
                     }
                 }
@@ -98,7 +95,7 @@ public class Node {
                 return false;
             case UNKNOWN:
             case QUERY:
-                //Ramdomly sample from CPT with samples from the parents.
+                //Randomly sample from CPT with samples from the parents.
                 if (parents == null) {
                     Random ran = new Random(System.nanoTime());
                     double randomNum = ran.nextDouble();
@@ -127,9 +124,9 @@ public class Node {
                         return randomNum > conditionalProbability.get(6);
                     } else if (!parent1Value && parent2Value) {
                         return randomNum > conditionalProbability.get(2);
-                    } else if (parent1Value && !parent2Value) {
+                    } else if (parent1Value) {
                         return randomNum > conditionalProbability.get(4);
-                    } else if (!parent1Value && !parent2Value) {
+                    } else{
                         return randomNum > conditionalProbability.get(0);
                     }
                 }
