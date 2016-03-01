@@ -34,14 +34,17 @@ public class Network {
 
             networkInput = new ArrayList<>();
             String line;
+            System.out.println("LINE BEFORE");
             while((line  = networkBufferedReader.readLine()) != null){
+                System.out.println("LINE");
                 networkInput.add(line);
             }
 
         }catch (FileNotFoundException error){
+            System.out.println("FILE NOT FOUND!");
 
         }catch (IOException error){
-
+            System.out.println("IO EXCEPTION");
         }
 
 
@@ -122,12 +125,12 @@ public class Network {
                 if (priors.get(indexOfQuery())) {
                     counts.set(1, counts.get(1) + 1);
                 } else {
-                    counts.set(0, counts.get(1) + 1);
+                    counts.set(0, counts.get(0) + 1);
                 }
             }
         }
-
-        return counts.get(1) / (counts.get(0) + counts.get(1)); //# of trues / total
+        //System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
+        return (double)counts.get(1) / (double)(counts.get(0) + counts.get(1)); //# of trues / total
     }
 
     private boolean isConsistent(ArrayList<Boolean> priors){
@@ -136,7 +139,7 @@ public class Network {
             System.exit(-1);
         }
 
-        ArrayList<Integer> evidence = indeciesOfEvidence();
+        ArrayList<Integer> evidence = indexesOfEvidence();
 
         for(Integer i: evidence){
             if(priors.get(i)){
@@ -153,7 +156,7 @@ public class Network {
 
     }
 
-    private ArrayList<Integer> indeciesOfEvidence(){
+    private ArrayList<Integer> indexesOfEvidence(){
         ArrayList<Integer> result = new ArrayList<>();
         int i = 0;
         for(Node node: network){
@@ -183,6 +186,7 @@ public class Network {
             output.add(node.priorSample());
             i++;
         }
+        //System.out.println("Size of priors: " + output.size());
         return output;
     }
 
