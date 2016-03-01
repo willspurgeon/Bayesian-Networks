@@ -53,6 +53,44 @@ public class Node {
 
     String[] parents;
 
+    double probGivenParents(){
+        switch (this.type) {
+            case EVIDENCETRUE:
+            case EVIDENCEFALSE:
+            case UNKNOWN:
+            case QUERY:
+                if (parents == null) {
+                    return conditionalProbability.get(1);
+                }
+                if (parents.length == 1) {
+                    Main.network.getNodeWithName(parents[0]);
+                    //System.out.println(parents[0]);
+                    boolean parentValue = Main.network.getNodeWithName(parents[0]).priorSample();
+                    if (parentValue) {
+                        return conditionalProbability.get(3);
+                    } else {
+                        return conditionalProbability.get(1);
+                    }
+                }
+                if (parents.length == 2) {
+                    boolean parent1Value = Main.network.getNodeWithName(parents[0]).priorSample();
+                    boolean parent2Value = Main.network.getNodeWithName(parents[1]).priorSample();
+
+                    if (parent1Value && parent2Value) {
+                        return conditionalProbability.get(7);
+                    } else if (!parent1Value && parent2Value) {
+                        return conditionalProbability.get(3);
+                    } else if (parent1Value && !parent2Value) {
+                        return conditionalProbability.get(5);
+                    } else if (!parent1Value && !parent2Value) {
+                        return conditionalProbability.get(1);
+                    }
+                }
+        }
+        return 0.0;
+    }
+
+
     boolean priorSample(){
         switch (this.type) {
             case EVIDENCETRUE:

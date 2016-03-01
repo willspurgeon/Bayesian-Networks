@@ -27,7 +27,7 @@ public class Main {
         double likelyHoodOutput = network.likelyhoodWeightingSampling(numSamples);
 
         System.out.println("Rejection Sampling: " + rejectionOutput);
-        System.out.println("Likelihood Weighting Sampling: " + likelyHoodOutput)
+        System.out.println("Likelihood Weighting Sampling: " + likelyHoodOutput);
 
     }
 }

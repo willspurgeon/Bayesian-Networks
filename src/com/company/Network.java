@@ -191,23 +191,52 @@ public class Network {
     }
 
     public double likelyhoodWeightingSampling(int numSamples){
+        ArrayList<Double> counts = new ArrayList<>();
+        counts.add(0.0); //False count
+        counts.add(0.0); //True count
         for(int i = 1; i <= numSamples; i++){
-
+            WeightedSample samples = weightedSample();
+                for(Boolean bool: samples.output){
+                    if(bool){
+                        counts.set(1, counts.get(1)+samples.w);
+                    }else{
+                        counts.set(0, counts.get(0)+samples.w);
+                    }
+            }
         }
-
-        return 0.0;
+        System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
+        return counts.get(1)/(counts.get(0)+counts.get(1));
     }
 
-    private double weightedSample(){
-        int w = 1;
+    private WeightedSample weightedSample(){
+        double w = 1.0;
+        ArrayList<Boolean> output = new ArrayList<>();
+        int i = 0;
         for(Node node: network){
             if(node.type == Node.NodeType.EVIDENCEFALSE || node.type == Node.NodeType.EVIDENCETRUE){
                 //w = w * node.
+                if(node.type == Node.NodeType.EVIDENCETRUE){
+                    System.out.println("Parents: " + node.probGivenParents());
+                    w = w * node.probGivenParents();
+                }else{
+                    w = w * (1-node.probGivenParents());
+                }
+            }else{
+                output.add(node.priorSample());
             }
+            i++;
         }
+        return new WeightedSample(w, output);
+    }
 
+    class WeightedSample{
+        double w = 1.0;
+        ArrayList<Boolean> output = new ArrayList<>();
 
-        return 0.0;
+        WeightedSample(double w, ArrayList<Boolean> priors){
+            this.w = w;
+            this.output = priors;
+        }
     }
 
 }
