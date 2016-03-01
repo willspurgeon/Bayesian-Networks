@@ -65,7 +65,7 @@ public class Node {
                 if (parents == null) {
                     Random ran = new Random(System.nanoTime());
                     double randomNum = ran.nextDouble();
-                    System.out.println("Returning: " + (randomNum > conditionalProbability.get(0)) + " Rand: " + randomNum + " Prob of true: " + conditionalProbability.get(1));
+                    //System.out.println("Returning: " + (randomNum > conditionalProbability.get(0)) + " Rand: " + randomNum + " Prob of true: " + conditionalProbability.get(1));
                     return randomNum > conditionalProbability.get(0);
                 }
                 if (parents.length == 1) {

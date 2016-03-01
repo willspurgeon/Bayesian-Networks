@@ -129,7 +129,7 @@ public class Network {
                 }
             }
         }
-        //System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
+        System.out.println("False count: " + counts.get(0) + " True count: " + counts.get(1));
         return (double)counts.get(1) / (double)(counts.get(0) + counts.get(1)); //# of trues / total
     }
 
@@ -199,6 +199,14 @@ public class Network {
     }
 
     private double weightedSample(){
+        int w = 1;
+        for(Node node: network){
+            if(node.type == Node.NodeType.EVIDENCEFALSE || node.type == Node.NodeType.EVIDENCETRUE){
+                //w = w * node.
+            }
+        }
+
+
         return 0.0;
     }
 

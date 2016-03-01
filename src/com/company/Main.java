@@ -23,9 +23,11 @@ public class Main {
 
         network = new Network(networkFilePath, queryFilePath);
 
-        double output = network.rejectionSampling(numSamples);
+        double rejectionOutput = network.rejectionSampling(numSamples);
+        double likelyHoodOutput = network.likelyhoodWeightingSampling(numSamples);
 
-        System.out.println("Output: " + output);
+        System.out.println("Rejection Sampling: " + rejectionOutput);
+        System.out.println("Likelihood Weighting Sampling: " + likelyHoodOutput)
 
     }
 }
