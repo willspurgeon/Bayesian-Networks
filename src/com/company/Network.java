@@ -106,20 +106,68 @@ public class Network {
         counts.add(0); //True count
 
         for(int i = 1; i <= numSamples; i++){
-            boolean x = getQueryVariable().priorSample();
-            //TODO: If x is consistent with the evidence variables:
-                if(x){
+            ArrayList<Boolean> priors = priorSample();
+
+            boolean consistent = isConsistent(priors);
+            if(consistent) {
+                if (priors.get(indexOfQuery())) {
                     counts.set(1, counts.get(1) + 1);
-                }else{
+                } else {
                     counts.set(0, counts.get(1) + 1);
                 }
+            }
         }
 
         return counts.get(1) / (counts.get(0) + counts.get(1)); //# of trues / total
     }
 
+    private boolean isConsistent(ArrayList<Boolean> priors){
+        if(priors.size() != network.size()){
+            System.out.println("Fatal error!");
+            System.exit(-1);
+        }
+
+        ArrayList<Integer> evidence = indeciesOfEvidence();
+
+        for(Integer i: evidence){
+            if(priors.get(i)){
+                if(network.get(i).type != Node.NodeType.EVIDENCETRUE){
+                    return false;
+                }
+            }else{
+                if(network.get(i).type != Node.NodeType.EVIDENCEFALSE){
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
+
+    private ArrayList<Integer> indeciesOfEvidence(){
+        ArrayList<Integer> result = new ArrayList<>();
+        int i = 0;
+        for(Node node: network){
+            if(node.type == Node.NodeType.EVIDENCEFALSE || node.type == Node.NodeType.EVIDENCETRUE){
+                result.add(i);
+            }
+            i++;
+        }
+        return result;
+    }
+
+    private int indexOfQuery(){
+        int i = 0;
+        for(Node node: network){
+            if(node.type == Node.NodeType.QUERY){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
     private ArrayList<Boolean> priorSample(){
-        Node queryVariable = getQueryVariable();
         ArrayList<Boolean> output = new ArrayList<>();
         int i = 0;
         for(Node node: network){
