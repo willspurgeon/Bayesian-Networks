@@ -101,33 +101,44 @@ public class Network {
     }
 
     public double rejectionSampling(int numSamples){
-        for(int i = 1; i <= numSamples; i++){
+        ArrayList<Integer> counts = new ArrayList<>();
+        counts.add(0); //False count
+        counts.add(0); //True count
 
+        for(int i = 1; i <= numSamples; i++){
+            boolean x = getQueryVariable().priorSample();
+            //TODO: If x is consistent with the evidence variables:
+                if(x){
+                    counts.set(1, counts.get(1) + 1);
+                }else{
+                    counts.set(0, counts.get(1) + 1);
+                }
         }
 
-
-        return 0.0;
+        return counts.get(1) / (counts.get(0) + counts.get(1)); //# of trues / total
     }
 
-    private priorSample(){
+    private ArrayList<Boolean> priorSample(){
         Node queryVariable = getQueryVariable();
+        ArrayList<Boolean> output = new ArrayList<>();
         int i = 0;
         for(Node node: network){
-
+            output.add(node.priorSample());
             i++;
         }
+        return output;
     }
 
     public double likelyhoodWeightingSampling(int numSamples){
         for(int i = 1; i <= numSamples; i++){
-            
+
         }
 
         return 0.0;
     }
 
     private double weightedSample(){
-
+        return 0.0;
     }
 
 }
